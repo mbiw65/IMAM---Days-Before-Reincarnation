@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#080808" />
+  <meta name="description" content="Read ÏMAM — Days Before Reincarnation, Issue One, free online." />
+  <meta property="og:title" content="ÏMAM — Days Before Reincarnation" />
+  <meta property="og:description" content="Issue One. Read the complete 24-page comic free online." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/pages/page-01.webp" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <title>ÏMAM — Days Before Reincarnation</title>
+  <link rel="icon" href="assets/ui/favicon.svg" type="image/svg+xml" />
+  <link rel="preload" as="image" href="assets/pages/page-01.webp" fetchpriority="high" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <div class="brand" aria-label="ÏMAM — Days Before Reincarnation">
+      <span class="brand-mark">ÏMAM</span>
+      <span class="brand-sub">Days Before Reincarnation</span>
+    </div>
+    <div class="toolbar">
+      <button class="icon-btn" id="thumbBtn" title="Pages" aria-label="Open page thumbnails">☷</button>
+      <button class="icon-btn" id="modeBtn" title="Toggle scroll mode" aria-label="Toggle reading mode">↕</button>
+      <button class="icon-btn" id="fullBtn" title="Fullscreen" aria-label="Fullscreen">⛶</button>
+      <button class="icon-btn" id="shareBtn" title="Share" aria-label="Share comic">↗</button>
+      <a class="pdf-btn" href="assets/IMAM_Days_Before_Reincarnation_Issue_One.pdf" download>PDF</a>
+    </div>
+  </header>
+
+  <main>
+    <section id="pagedReader" class="reader paged-reader" aria-label="Comic reader">
+      <div class="page-stage" id="pageStage">
+        <button class="edge edge-left" id="prevEdge" aria-label="Previous page"></button>
+        <figure class="page-frame" id="pageFrame">
+          <img id="pageImage" src="assets/pages/page-01.webp" alt="Comic page 1 of 24" draggable="false" fetchpriority="high" />
+        </figure>
+        <button class="edge edge-right" id="nextEdge" aria-label="Next page"></button>
+      </div>
+
+      <div class="controls" aria-label="Comic navigation">
+        <button id="prevBtn" class="nav-btn">← Previous</button>
+        <div class="page-status">
+          <span id="pageLabel">Page 1 / 24</span>
+          <input id="progress" type="range" min="1" max="24" value="1" step="1" aria-label="Choose page" />
+        </div>
+        <button id="nextBtn" class="nav-btn primary">Next →</button>
+      </div>
+      <p class="hint">Swipe, tap the page edges, or use ← → keys.</p>
+    </section>
+
+    <section id="scrollReader" class="reader scroll-reader" aria-label="Vertical comic reader" hidden>
+      <div id="scrollPages" class="scroll-pages"></div>
+      <div class="scroll-footer">
+        <p>End of Issue One.</p>
+        <button id="readAgainBtn" class="nav-btn primary">Read again</button>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="thumbDialog" class="thumb-dialog">
+    <div class="dialog-head">
+      <div>
+        <strong>Issue One</strong>
+        <span>24 pages</span>
+      </div>
+      <button class="icon-btn" id="closeThumbs" aria-label="Close thumbnails">×</button>
+    </div>
+    <div id="thumbGrid" class="thumb-grid"></div>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
