@@ -1,6 +1,6 @@
 (() => {
   const TOTAL = 24;
-  const pagePath = n => `assets/pages/page-${String(n).padStart(2, '0')}.webp`;
+  const pagePath = n => `page-${String(n).padStart(2, '0')}.webp`;
   const $ = id => document.getElementById(id);
 
   const pagedReader = $('pagedReader');
