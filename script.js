@@ -162,11 +162,57 @@
   closeThumbs.addEventListener('click', () => thumbDialog.close());
   thumbDialog.addEventListener('click', e => { if (e.target === thumbDialog) thumbDialog.close(); });
 
+  function setImmersive(on) {
+    document.body.classList.toggle('immersive', on);
+    fullBtn.textContent = on ? '×' : '⛶';
+    fullBtn.title = on ? 'Exit fullscreen reader' : 'Fullscreen';
+    fullBtn.setAttribute('aria-label', on ? 'Exit fullscreen reader' : 'Fullscreen');
+    if (on) {
+      // On mobile, scrolling a tiny amount encourages browser chrome to collapse.
+      requestAnimationFrame(() => window.scrollTo(0, 1));
+      showToast('Fullscreen reader on');
+    }
+  }
+
+  function isIOS() {
+    return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  }
+
   fullBtn.addEventListener('click', async () => {
-    try {
-      if (!document.fullscreenElement) await document.documentElement.requestFullscreen();
-      else await document.exitFullscreen();
-    } catch { showToast('Fullscreen is not available here.'); }
+    // iPhone/iPad Safari does not reliably support the Fullscreen API for normal web pages.
+    // Use our own immersive reader there. It also works as a fallback everywhere else.
+    if (document.body.classList.contains('immersive')) {
+      setImmersive(false);
+      return;
+    }
+
+    if (document.fullscreenElement) {
+      try { await document.exitFullscreen(); } catch {}
+      return;
+    }
+
+    if (!isIOS() && document.documentElement.requestFullscreen) {
+      try {
+        await document.documentElement.requestFullscreen({ navigationUI: 'hide' });
+        return;
+      } catch {}
+    }
+
+    setImmersive(true);
+  });
+
+  document.addEventListener('fullscreenchange', () => {
+    const on = !!document.fullscreenElement;
+    if (!on && !document.body.classList.contains('immersive')) {
+      fullBtn.textContent = '⛶';
+      fullBtn.title = 'Fullscreen';
+      fullBtn.setAttribute('aria-label', 'Fullscreen');
+    } else if (on) {
+      fullBtn.textContent = '×';
+      fullBtn.title = 'Exit fullscreen';
+      fullBtn.setAttribute('aria-label', 'Exit fullscreen');
+    }
   });
 
   shareBtn.addEventListener('click', async () => {
